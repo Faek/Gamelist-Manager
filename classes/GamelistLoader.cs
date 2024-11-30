@@ -58,8 +58,12 @@ namespace GamelistManager.classes
             destinationDataSet.Tables.Add(newTable);
             destinationDataSet.AcceptChanges();
 
+            DataTable? sourceXmlGameTable = sourceDataSet.Tables["game"];
+            if (sourceXmlGameTable is null)
+                return null!;
+
             // Copy data from sourceDataSet to destinationDataSet
-            foreach (DataRow sourceRow in sourceDataSet.Tables[0].Rows)
+            foreach (DataRow sourceRow in sourceXmlGameTable.Rows)
             {
                 DataRow destinationRow = destinationDataSet.Tables[0].NewRow();
 
@@ -73,7 +77,7 @@ namespace GamelistManager.classes
                     string destinationColumnName = metaDataDecl.Name;
 
                     // Check if the source column exists
-                    if (sourceDataSet.Tables[0].Columns.Contains(sourceColumnName))
+                    if (sourceXmlGameTable.Columns.Contains(sourceColumnName))
                     {
                         var sourceValue = sourceRow[sourceColumnName];
 

@@ -575,13 +575,14 @@ namespace GamelistManager
                 return;
             }
 
+            int recentItemCount = 0;
             foreach (var file in recentFiles.Split(","))
             {
                 // The margin is set to match the menu template
                 string fileShortName = Path.GetFileNameWithoutExtension(file);
                 var menuItem = new MenuItem
                 {
-                    Name = $"lastfile_{fileShortName}",
+                    Name = $"lastfile_{recentItemCount}",
                     Header = file,
                     Tag = file,
                     Margin = new Thickness(-30, 0, -40, 0)
@@ -591,6 +592,7 @@ namespace GamelistManager
 
                 // Add the menu item to the recent files menu
                 menuItem_File.Items.Add(menuItem);
+                recentItemCount++;
             }
 
         }
